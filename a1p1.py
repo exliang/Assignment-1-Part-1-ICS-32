@@ -21,7 +21,7 @@ def user_input():
 	myPath = Path(path)
 
 	if command == 'L': #list contents of directory 
-		#check if directory isnt empty
+		if any(myPath.iterdir()): #check if directory isnt empty
 			for currentPath in myPath.iterdir(): #list contents of the directory 
 				print(currentPath)
 	elif command == 'Q':
