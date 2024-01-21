@@ -72,7 +72,7 @@ def list_directories(myPath):
 def list_files(myPath):
 	if any(myPath.iterdir()): #check if directory isnt empty
 		for currentPath in myPath.iterdir(): #list contents of the directory 
-			if currentPath.is_file():
+			if currentPath.is_file(): #list files only 
 				print(currentPath)
 
 def matching_files(myPath, file_name): 
