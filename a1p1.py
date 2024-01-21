@@ -11,35 +11,37 @@ def main():
 	user_input()
 
 def user_input():
-	user_command = input() #format: [COMMAND] [INPUT] [[-]OPTION] [INPUT]
-	command_list = user_command.split()
+	while True:
+		user_command = input() #format: [COMMAND] [INPUT] [[-]OPTION] [INPUT]
+		command_list = user_command.split()
+		command = command_list[0]
 
-	command = command_list[0]
-	path = command_list[1]
-	myPath = Path(path)
+		if command == 'Q':
+			quit()
 
-	if myPath.exists(): #ensure that directory exists 
-		if command == 'L': #list contents of directory 
-			if len(command_list) == 2: #[COMMAND] [INPUT]
-				list_directories(myPath)
-			elif len(command_list) == 3: #[COMMAND] [INPUT] [[-]OPTION]
-				option = command_list[2]
-				if option == '-r':
-					recursive_output(myPath)
-				elif option == '-f': #output files only
-					list_files(myPath)
-			elif len(command_list) == 4: #[COMMAND] [INPUT] [[-]OPTION] [INPUT]
-				option = command_list[2]
-				if option == '-s': #output files that match the file name
-					file_name = command_list[3] 
-					matching_files(myPath, file_name)
-				elif option == '-e':
-					file_extension = command_list[3]
-					matching_extension(myPath, file_extension)
-		elif command == 'Q':
-			exit()
-	else:
-		print("Directory doesn't exist. Try again.")
+		path = command_list[1]
+		myPath = Path(path) 
+
+		if myPath.exists(): #ensure that directory exists
+			if command == 'L': #list contents of directory 
+				if len(command_list) == 2: #[COMMAND] [INPUT]
+					list_directories(myPath)
+				elif len(command_list) == 3: #[COMMAND] [INPUT] [[-]OPTION]
+					option = command_list[2]
+					if option == '-r':
+						recursive_output(myPath)
+					elif option == '-f': #output files only
+						list_files(myPath)
+				elif len(command_list) == 4: #[COMMAND] [INPUT] [[-]OPTION] [INPUT]
+					option = command_list[2]
+					if option == '-s': #output files that match the file name
+						file_name = command_list[3] 
+						matching_files(myPath, file_name)
+					elif option == '-e':
+						file_extension = command_list[3]
+						matching_extension(myPath, file_extension)
+		else:
+			print("Directory doesn't exist. Try again.")
 
 def list_directories(myPath):
 	if any(myPath.iterdir()): #check if directory isnt empty
