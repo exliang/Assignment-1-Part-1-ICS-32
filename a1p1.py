@@ -36,8 +36,8 @@ def user_input():
 				file_name = command_list[3] 
 				matching_files(myPath, file_name)
 			elif option == '-e':
-				extension = command_list[3]
-				matching_extension(myPath, file_name)
+				file_extension = command_list[3]
+				matching_extension(myPath, file_extension)
 
 	elif command == 'Q':
 		exit()
@@ -63,15 +63,17 @@ def list_files(myPath):
 				print(currentPath)
 
 def recursive_output():
-	pass
+	
 
 def matching_files(myPath, file_name): 
 	for currentPath in myPath.iterdir(): #list contents of the directory 
 		if currentPath.is_file() and currentPath.name == file_name: #matching file name & must be a file
 			print(currentPath)
 
-def matching_extension(myPath, file_name):
-	pass
+def matching_extension(myPath, file_extension):
+	for currentPath in myPath.iterdir(): #list contents of the directory 
+		if currentPath.name.endswith(file_extension): #check if the file type is the same as what the user entered 
+			print(currentPath)
 
 if __name__ == '__main__':
 	main()
