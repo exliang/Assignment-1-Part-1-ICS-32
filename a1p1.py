@@ -76,41 +76,57 @@ def list_files(myPath):
 				print(currentPath)
 
 def matching_files(myPath, file_name): 
-	for currentPath in myPath.iterdir(): #list contents of the directory 
-		if currentPath.is_file() and currentPath.name == file_name: #matching file name & path must be a file
-			print(currentPath)
+	if any(myPath.iterdir()): #check if directory isnt empty
+		for currentPath in myPath.iterdir(): #list contents of the directory 
+			if currentPath.is_file() and currentPath.name == file_name: #matching file name & path must be a file
+				print(currentPath)
 
 def matching_extension(myPath, file_extension):
-	for currentPath in myPath.iterdir(): #list contents of the directory 
-		if currentPath.name.endswith(file_extension): #check if the file type is the same as what the user entered 
-			print(currentPath)
+	if any(myPath.iterdir()): #check if directory isnt empty
+		for currentPath in myPath.iterdir(): #list contents of the directory 
+			if currentPath.name.endswith(file_extension): #check if the file type is the same as what the user entered 
+				print(currentPath)
 
 def recursive(myPath):
-	for currentPath in myPath.iterdir(): #list contents of the directory 
-		print(currentPath)
-		if currentPath.is_dir(): #if it's a directory, print the subdirectories after 
-			recursive(currentPath)
+	dir_list = []
+	if not any(myPath.iterdir()): #if there's no more folders in directory 
+		return 
+	elif any(myPath.iterdir()): #check if directory isnt empty
+		for currentPath in myPath.iterdir(): #list contents of the directory 
+			if currentPath.is_file(): #if it's a file, print it 
+				print(currentPath)
+		for currentPath in myPath.iterdir(): #list contents of the directory 
+			if currentPath.is_dir(): #if it's a directory, print it and the subdirectories after 
+				dir_list.append(currentPath)
+				print(currentPath)
+				recursive(currentPath)
 
 def recursive_f(myPath):
-	for currentPath in myPath.iterdir(): #list contents of the directory 
-		if not currentPath.is_dir():
-			print(currentPath)
-		else: #if it's a directory, print the subdirectories after 
-			recursive_f(currentPath)
+	if any(myPath.iterdir()): #check if directory isnt empty
+		for currentPath in myPath.iterdir(): #list contents of the directory 
+			if not currentPath.is_dir():
+				print(currentPath)
+		for currentPath in myPath.iterdir():
+			if currentPath.is_dir(): #if it's a directory, print the subdirectories after 
+				recursive_f(currentPath)
 
 def recursive_s(myPath, file_name):
-	for currentPath in myPath.iterdir(): #list contents of the directory 
-		if currentPath.is_file() and currentPath.name == file_name: #matching file name & path must be a file
-			print(currentPath)
-		if currentPath.is_dir(): #if it's a directory, call the func again to check if subdirectories satisfy  
-			recursive_s(currentPath, file_name)
+	if any(myPath.iterdir()): #check if directory isnt empty
+		for currentPath in myPath.iterdir(): #list contents of the directory 
+			if currentPath.is_file() and currentPath.name == file_name: #matching file name & path must be a file
+				print(currentPath)
+		for currentPath in myPath.iterdir():
+			if currentPath.is_dir(): #if it's a directory, call the func again to check if subdirectories satisfy  
+				recursive_s(currentPath, file_name)
 
 def recursive_e(myPath, file_extension):
-	for currentPath in myPath.iterdir(): #list contents of the directory 
-		if currentPath.name.endswith(file_extension): #check if the file type is the same as what the user entered 
-			print(currentPath)
-		if currentPath.is_dir(): #if it's a directory, call the func again to check if subdirectories satisfy 
-			recursive_e(currentPath, file_extension)
+	if any(myPath.iterdir()): #check if directory isnt empty
+		for currentPath in myPath.iterdir(): #list contents of the directory 
+			if currentPath.name.endswith(file_extension): #check if the file type is the same as what the user entered 
+				print(currentPath)
+		for currentPath in myPath.iterdir():
+			if currentPath.is_dir(): #if it's a directory, call the func again to check if subdirectories satisfy 
+				recursive_e(currentPath, file_extension)
 
 if __name__ == '__main__':
 	main()
