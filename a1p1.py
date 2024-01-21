@@ -25,20 +25,17 @@ def user_input():
 			elif len(command_list) == 3: #[COMMAND] [INPUT] [[-]OPTION]
 				option = command_list[2]
 				if option == '-r':
-					recursive_output()
+					recursive_output(myPath)
 				elif option == '-f': #output files only
 					list_files(myPath)
 			elif len(command_list) == 4: #[COMMAND] [INPUT] [[-]OPTION] [INPUT]
 				option = command_list[2]
 				if option == '-s': #output files that match the file name
 					file_name = command_list[3] 
-					if not file_name.exists(): #handling exception for if a file name doesn't exist 
-						idk = input("File does not exist")
 					matching_files(myPath, file_name)
 				elif option == '-e':
 					file_extension = command_list[3]
 					matching_extension(myPath, file_extension)
-
 		elif command == 'Q':
 			exit()
 	else:
@@ -74,8 +71,11 @@ def matching_extension(myPath, file_extension):
 		if currentPath.name.endswith(file_extension): #check if the file type is the same as what the user entered 
 			print(currentPath)
 
-def recursive_output():
-	pass
+def recursive_output(myPath):
+	for currentPath in myPath.iterdir(): #list contents of the directory 
+		print(currentPath)
+		if currentPath.is_dir(): #if it's a directory, print the subdirectories after 
+			recursive_output(currentPath)
 
 if __name__ == '__main__':
 	main()
